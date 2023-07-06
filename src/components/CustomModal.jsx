@@ -63,6 +63,7 @@ function CustomModal() {
       try {
         const res = await axios.post("https://httpbin.org/post", values);
         console.log(res);
+        handleClose();
       } catch (e) {
         console.log(e);
       }
