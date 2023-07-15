@@ -57,11 +57,38 @@ function CustomModal() {
       img: "",
     },
     validate,
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       // alert(JSON.stringify(values, null, 2));
 
+      // console.log(formik.values.firstname);
+      // console.log(formik.values.lastname);
+      // console.log(formik.values.email);
+      // console.log(formik.values.password);
+      // console.log(formik.values.img);
+      const firstName = formik.values.firstname;
+      const lastName = formik.values.lastname;
+      const email = formik.values.email;
+      const password = formik.values.password;
+      const img = formik.values.img;
+
       try {
-        const res = await axios.post("https://httpbin.org/post", values);
+        const formData = new FormData();
+        formData.append("firstname", firstName);
+        formData.append("lastname", lastName);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("img", img);
+
+        console.log(...formData);
+
+        // const res = await axios.post("https://httpbin.org/post", formData);
+        const res = await axios({
+          method: "post",
+          url: "https://httpbin.org/post",
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        // console.log("values are: " + values);
         console.log(res);
         handleClose();
       } catch (e) {
